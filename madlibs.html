@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+  <script src="/assets/jquery.js"></script>
+  <style>
+    body {
+      margin: 3em auto;
+      text-align: center;
+      font-family: 'Pathway Gothic One';
+      font-size: 20px;
+      background: #FFFFF8 url(https://raw.githubusercontent.com/ecsmith/me/gh-pages/css/images/diagonal-wavy2.png);
+      background-position:  center;
+    }
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"],
+    button {
+      background: #FFFFF8 ;
+      margin: 1em auto;
+      font-family: 'Pathway Gothic One';
+      /*border-radius: 1em;*/
+
+      -webkit-box-shadow:
+      inset 0px 0px 0px 1px rgba(0,0,0,.2),
+      inset 0px 0px 0px 2px rgba(255,255,255,1),
+      inset 0px 0px 0px 3px rgba(0,0,0,.2);
+      -moz-box-shadow: inset 0px 0px 0px 2px rgba(255,255,248,1)
+      inset 0px 0px 0px 1px rgba(0,0,0,1);
+      box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,1)
+      inset 0px 0px 0px 2px rgba(255,255,248,1);
+      border: none;
+      color: #000;
+      text-shadow: 0 0 0.5px rgba(255,255,255,0.25);
+      cursor: pointer;
+      text-decoration: none;
+      outline: 0;
+      padding: 1em 3em 1em 3em;
+      text-align: center;
+      font-size: 9pt;
+      font-weight: 400;
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      -o-transition: all 0.30s ease-in-out;
+    }
+    button:hover {
+      cursor: pointer;
+      background: #FFFFFF;
+      color: #111;
+    }
+    .container{
+      background: #FFFFF8 url(https://raw.githubusercontent.com/ecsmith/me/gh-pages/css/images/diagonal.png) ;
+      border: double 4px rgba(0,0,0,.2);
+      margin: 0 auto;
+      padding: 1em 1em;
+      max-width: 250px
+    }
+    input[type=text]:focus {
+      padding: 1em 1em;
+      margin: 5px 1px 3px 0px;
+      background: #FFFFF8 url(https://raw.githubusercontent.com/ecsmith/me/gh-pages/css/images/diagonal.png);
+      /*  margin: 0 0 10px 0;*/
+      -webkit-box-shadow:
+      inset 0px 0px 2px 0px rgba(0,0,0,.1);
+    }
+    input[type=text] {
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      -o-transition: all 0.30s ease-in-out;
+      background: #FFFFF8;
+      font-size: 18px;
+      padding: .3em .3em;
+      outline: none;
+      border: 1px dotted rgba(0,0,0,.2);
+      -webkit-box-shadow:
+      inset 0px 0px 2px 0px rgba(0,0,0,.1);
+    }
+    .prompttext {
+      color: #444;
+      line-height: 1px;
+      text-shadow: 0 10px 10px rgba(0,0,0,0.025);
+      font-weight: 400;
+    }
+    .fill {
+      font-weight: 400;
+      color: #35b88f;
+      line-height: 2em;
+      border-bottom: 2px black double;
+      font-family: 'Shadows Into Light';
+      padding: 0 6px;
+      margin: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="prompt"></div>
+    <button>Next</button>
+  </div>
+  <script>
+// List of prompts for the user
+var prompts = [
+'Type your name',
+'Type an adjective',
+'Type a noun'
+];
+
+var answers=[];
+// Keep track of current prompt we're on
+var currentPrompt = 0;
+
+// A function that will call the next prompt
+var nextPrompt = function() {
+  //if there's no answer in the form
+  if (currentPrompt != 0){
+    answers.push($('input').val());
+  }
+    // if there is a next prompt
+    if (currentPrompt < prompts.length) {
+        // put first prompt in all html elements with class
+        $('.prompt').html('<div class="prompttext">'+prompts[currentPrompt]+'</div>' +'<br><input type="text">');
+        // move the next prompt into variable currentPrompt
+        currentPrompt = currentPrompt + 1;
+      }
+    //or else if we're at the end of the array
+    else {
+        // put a new message into the html.
+        showFinal();
+      }
+    }
+
+//puts user answers into HTML
+var showFinal = function() {
+  $('.prompt').html('This is the story of <span class="fill">'+answers[0]+'</span> and the <span class="fill">'+answers[1]+'</span> <span class="fill">'+answers[2]+'</span>.');
+  $('button').hide();
+}
+// run nextPrompt function when button is clicked
+$('button').click(function() {
+  nextPrompt();
+});
+$('.prompt').keypress(function(event){
+  if(event.keyCode == 13){
+    nextPrompt();
+  }
+});
+// Show the first prompt as soon as js loads
+nextPrompt();
+</script>
+
+</body>
